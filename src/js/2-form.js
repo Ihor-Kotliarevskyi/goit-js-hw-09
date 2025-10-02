@@ -24,11 +24,9 @@ const input = form.querySelector('input');
 const textarea = form.querySelector('textarea');
 
 checkInput();
-checkTextarea();
 
 form.addEventListener('submit', handlerSubmit);
-input.addEventListener('input', handlerInput);
-textarea.addEventListener('input', handlerTextarea);
+form.addEventListener('input', handlerInput);
 
 function handlerSubmit(event) {
   event.preventDefault();
@@ -46,25 +44,23 @@ function handlerSubmit(event) {
 }
 
 function handlerInput(event) {
-  formData.email = event.target.value;
-  localStorage.setItem(FEEDBACK_KEY, JSON.stringify(formData));
-}
+  if (event.target.nodeName === 'INPUT') {
+    formData.email = event.target.value;
+  } else {
+    formData.message = event.target.value;
+  }
 
-function handlerTextarea(event) {
-  formData.message = event.target.value;
   localStorage.setItem(FEEDBACK_KEY, JSON.stringify(formData));
 }
 
 function checkInput() {
-  if (JSON.parse(localStorage.getItem(FEEDBACK_KEY)).email) {
-    input.value = JSON.parse(localStorage.getItem(FEEDBACK_KEY)).email;
-  }
-  return;
-}
-
-function checkTextarea() {
-  if (JSON.parse(localStorage.getItem(FEEDBACK_KEY)).message) {
-    textarea.value = JSON.parse(localStorage.getItem(FEEDBACK_KEY)).message;
+  if (JSON.parse(localStorage.getItem(FEEDBACK_KEY))) {
+    formData.email = input.value = JSON.parse(
+      localStorage.getItem(FEEDBACK_KEY)
+    ).email;
+    formData.message = textarea.value = JSON.parse(
+      localStorage.getItem(FEEDBACK_KEY)
+    ).message;
   }
   return;
 }
