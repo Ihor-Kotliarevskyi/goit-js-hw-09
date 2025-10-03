@@ -17,7 +17,7 @@ function handlerSubmit(event) {
   event.preventDefault();
 
   if (formData.email && formData.message) {
-    console.log(formData.email, formData.message);
+    console.log(formData);
   } else {
     alert('Fill please all fields');
     return;
@@ -31,7 +31,7 @@ function handlerSubmit(event) {
 function handlerInput(event) {
   if (event.target.nodeName === 'INPUT') {
     formData.email = event.target.value;
-  } else {
+  } else if (event.target.nodeName === 'TEXTAREA') {
     formData.message = event.target.value;
   }
 
