@@ -29,9 +29,9 @@ function handlerSubmit(event) {
 }
 
 function handlerInput(event) {
-  if (event.target.nodeName === 'INPUT') {
+  if (event.target.name === 'email') {
     formData.email = event.target.value;
-  } else if (event.target.nodeName === 'TEXTAREA') {
+  } else if (event.target.name === 'message') {
     formData.message = event.target.value;
   }
 
@@ -39,13 +39,10 @@ function handlerInput(event) {
 }
 
 function checkInput() {
-  if (JSON.parse(localStorage.getItem(FEEDBACK_KEY))) {
-    formData.email = input.value = JSON.parse(
-      localStorage.getItem(FEEDBACK_KEY)
-    ).email;
-    formData.message = textarea.value = JSON.parse(
-      localStorage.getItem(FEEDBACK_KEY)
-    ).message;
+  const storage = localStorage.getItem(FEEDBACK_KEY);
+  if (JSON.parse(storage)) {
+    formData.email = input.value = JSON.parse(storage).email;
+    formData.message = textarea.value = JSON.parse(storage).message;
   }
   return;
 }
